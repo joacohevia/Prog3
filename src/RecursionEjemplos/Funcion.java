@@ -1,6 +1,7 @@
 package RecursionEjemplos;
 
 public class Funcion {
+
     public void imprimir(int x){
         if (x>0){
             System.out.println(x);
@@ -15,13 +16,12 @@ public class Funcion {
         }
     }
 
-
     public int calcularFactorial(int n) {
         // Caso base: Si n es 0 o 1, el factorial es 1
         if (n == 0 || n == 1) {//en el ultimo caso devuelve 1
             return 1;
         } else {
-            // Llamada recursiva: n * factorial de (n - 1)
+            // 3*2->3*1->3*2
             return n * calcularFactorial(n - 1);
         }
     }

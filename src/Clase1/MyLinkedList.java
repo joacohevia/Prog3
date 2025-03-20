@@ -19,7 +19,8 @@ public class MyLinkedList<T extends Comparable<T>> implements Iterable<T>{
     public Iterator<T> iterator() {
         return new MyIterator<T>(this.getNode(0));
     }
-    public Node<T> getNode(int index) {
+    //retorna el nodo
+    private Node<T> getNode(int index) {
         if (!isEmpty() && size > index) {
             Node<T> tmp = this.first;
             for (int i = 0; i <= index && tmp != null; i++) {
@@ -30,6 +31,18 @@ public class MyLinkedList<T extends Comparable<T>> implements Iterable<T>{
             }
         }
         return null;
+    }
+    //retorna info del nodo
+    public T getIndice(int index) {
+        if (index < 0 || index >= this.getSize()) {
+            System.out.println("Índice fuera de rango");
+            return null;
+        }
+        Node<T> nodo = first;
+        for (int i = 0; i < index && nodo != null; i++) {
+            nodo = nodo.getNext(); // Avanzamos hasta el índice deseado
+        }
+        return nodo.getInfo(); // Retornamos el dato/informacion en el nodo correspondiente
     }
     public static <T extends Comparable<T>> MyLinkedList<T> unionList (MyLinkedList<T> list1, MyLinkedList<T> list2){
         Iterator<T> it1 = list1.iterator();
@@ -43,9 +56,6 @@ public class MyLinkedList<T extends Comparable<T>> implements Iterable<T>{
             }
         }
         return tmp;
-    }
-    public boolean contains(T value) {
-        return this.indexOf(value) != -1;
     }
 
     /*public static <T extends Comparable<T>> MyLinkedList<T>
@@ -69,7 +79,8 @@ public class MyLinkedList<T extends Comparable<T>> implements Iterable<T>{
 
         }
         return result;
-    }*/
+
+    // unir desordenado sin usar itereator
     public static <T extends Comparable<T>> MyLinkedList<T>
     unionDesordenados(MyLinkedList<T> lista1, MyLinkedList<T> lista2) {
         MyLinkedList<T> result = new MyLinkedList<>();
@@ -89,8 +100,7 @@ public class MyLinkedList<T extends Comparable<T>> implements Iterable<T>{
         }
         return result;
     }
-
-
+    }
     public void ordenar (){
         Node<T> actual = first;
       while (actual != null && actual.getNext() != null){
@@ -105,6 +115,25 @@ public class MyLinkedList<T extends Comparable<T>> implements Iterable<T>{
       }
 
     }
+    */
+
+    //EJERCICIO 6 crear lista con elementos solo de una
+    public static <T extends Comparable<T>> MyLinkedList<T> diferencia(MyLinkedList<T> lista1,MyLinkedList<T> lista2){
+        MyLinkedList<T> result = new MyLinkedList<>();
+        Node<T> actual = lista1.first;
+        while (actual != null){
+            if (!lista2.contains(actual.getInfo())){
+                result.insertLast(actual.getInfo());
+            }
+            actual = actual.getNext();
+        }
+        return result;
+    }
+
+    public boolean contains(T value) {
+        return this.indexOf(value) != -1;
+    }
+    //da el indice que tiene dicho dato
     public int indexOf(T dato){
         Node<T> actual = first;
         int index = 0;
@@ -118,36 +147,40 @@ public class MyLinkedList<T extends Comparable<T>> implements Iterable<T>{
         return -1;
     }
 
-    public void deleteFront(){
+    public void remove(T dato) {
+        Node<T> actual = first;
+        if (first != null) {
+            if (first.getInfo().equals(dato)) {
+                first = first.getNext();
+            }                   // 2->3 =3 si el siguiente de dos es igual a dato corta
+            while (actual.getNext() != null && !actual.getNext().getInfo().equals(dato)) {
+            actual = actual.getNext();
+            }//si el que sigue de 2 no es null osea 3 emtonces le settea el sig del sig
+            if (actual.getNext() != null) {
+            actual.setNext(actual.getNext().getNext()); // Salteamos el nodo a eliminar
+            }
+        }
+    }
+
+    public T extractFront(){
         if (isEmpty()){
             System.out.println("lista vacia");
         }
         T dato = first.getInfo();
         first = first.getNext();
         size--;
-
+        return dato;
     }
     public boolean isEmpty(){
         return first == null;
     }
-    public T getIndice(int index) {
-        if (index < 0 || index >= size) {
-            System.out.println("Índice fuera de rango");
-        }
-        Node<T> nodo = first;
-        for (int i = 0; i < index; i++) {
-            nodo = nodo.getNext(); // Avanzamos hasta el índice deseado
-        }
-        return nodo.getInfo(); // Retornamos el dato/informacion en el nodo correspondiente
-    }
-
     public void insertFront(T dato){
         Node<T> nuevo = new Node<>(dato);
         nuevo.setNext(first);//el nuevo apunta al primero
         first = nuevo;//el primero es el nuevo nodo
         size++;
     }
-    public void agregar(T dato) {
+    public void insertLast(T dato) {
         Node<T> nuevo = new Node<>(dato);
         if (first == null) {
             first = nuevo;
@@ -162,12 +195,16 @@ public class MyLinkedList<T extends Comparable<T>> implements Iterable<T>{
     }
     @Override
     public String toString() {
-        return "MyLinkedList{" +
-                "first=" + first +
-                ", size=" + size +
-                '}';
+        if (isEmpty()) {
+            return "Lista vacia";
+        }
+        System.out.println("-----------Valores en la lista-----------");
+        String resultado = "";
+        for (int i = 0; i < this.size; i++) {
+            resultado += this.getIndice(i) + " | ";
+        }
+        return resultado;
     }
-
 
     public int getSize() {
         return size;
@@ -177,5 +214,6 @@ public class MyLinkedList<T extends Comparable<T>> implements Iterable<T>{
         this.size = size;
     }
 }
+
 
 

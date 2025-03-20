@@ -4,73 +4,71 @@ public class Main {
     public static void main(String[] args) {
         MyLinkedList<Integer> lista = new MyLinkedList<>();
 
-        lista.agregar(1);
-        lista.agregar(2);
-        lista.agregar(3);
-        lista.agregar(4);
-        lista.agregar(5);
+        lista.insertLast(1);
+        lista.insertLast(2);
+        lista.insertLast(3);
+        lista.insertLast(4);
+        lista.insertLast(5);
+        lista.insertLast(45);
         lista.insertFront(50);
         //lista.deleteFront();
-        //System.out.println(lista.getIndice(2)+" buscado");
+        //System.out.println(lista.getIndice(2)+" buscado por pos");
+        //System.out.println(lista.getSize());
+        //System.out.println(lista.indexOf(45)+" busqueda por elemento");
+        //lista.remove(45);//elimina elemento
+        //System.out.println(lista.extractFront()+" extraido");
+        //lista.remove(3);
+        //for(int i : lista){
+        //    System.out.println(i);
+        //}
+
         MyLinkedList<Integer> listaNum = new MyLinkedList<>();
-        listaNum.agregar(5);
-        listaNum.agregar(4);
-        listaNum.agregar(3);
-        listaNum.agregar(10);
-        listaNum.agregar(7);
-        listaNum.agregar(8);
+        listaNum.insertLast(5);
+        listaNum.insertLast(7);
+        listaNum.insertLast(2);
+        listaNum.insertLast(10);
+        listaNum.insertLast(3);
+        listaNum.insertLast(8);
 
-        listaNum.ordenar();
 
-        for (int j : listaNum){
-            System.out.println(j);
-        }
         // el metodo es static emtonces puedo llamar sin crear una instancia
-        MyLinkedList<Integer> listaComun = MyLinkedList.unionDesordenados(lista,listaNum);
-        for (int i : listaComun){
-            System.out.println(i+"u1");
-        }
+        MyLinkedList<Integer> listaComun = MyLinkedList.unionList(lista,listaNum);
+        System.out.println(listaComun);
 
         MyLinkedList<Integer> lista1 = new MyLinkedList<>();
-        lista1.insertFront(1);
-        lista1.insertFront(5);
-        lista1.insertFront(8);
+        lista1.insertFront(11);
+        lista1.insertFront(21);
         lista1.insertFront(3);
+        lista1.insertFront(2);
 
         MyLinkedList<Integer> lista2 = new MyLinkedList<>();
-        lista2.insertFront(5);
-        lista2.insertFront(10);
+        lista2.insertFront(7);
         lista2.insertFront(8);
-        lista2.insertFront(9);
-        MyLinkedList<Integer> listaDesordenada = MyLinkedList.unionList(lista1,lista2);
+        lista2.insertFront(3);
+        lista2.insertFront(2);
+        MyLinkedList<Integer> listaOrdenada = MyLinkedList.unionList(lista1,lista2);
+        System.out.println(listaOrdenada);
 
-        for (int i : listaDesordenada){
-            System.out.println(i+"u");
+        MyLinkedList<Integer> unionLista = MyLinkedList.diferencia(lista1,lista2);
+
+        for (int j : unionLista){
+            System.out.println(j);
         }
 
-        //System.out.println(lista.indexOf(45)+" busqueda por elemento");
-
-        //System.out.println(lista.isEmpty());
 
         /*MyLinkedList<String> listaNombres = new MyLinkedList<>();
-
-        listaNombres.agregar("juan");
-        listaNombres.agregar("joaquin");
+        listaNombres.insertLast("juan");
+        listaNombres.insertLast("joaquin");
         for (String i : listaNombres){
             System.out.println(i);
         }*/
-
         /*MyLinkedList<Persona> listaPersonas = new MyLinkedList<>();
-
         // Crear personas
         Persona persona1 = new Persona("Juan", 30);
         Persona persona2 = new Persona("Ana", 25);
-
         // Agregar personas a la lista
-        listaPersonas.agregar(persona1);
-        listaPersonas.agregar(persona2);
-
-        // Iterar y mostrar las personas
+        listaPersonas.insertLast(persona1);
+        listaPersonas.insertLast(persona2);
         for (Persona p : listaPersonas) {
             System.out.println(p);
         }*/
